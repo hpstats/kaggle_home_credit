@@ -1,11 +1,27 @@
 IV <- select(application_train, 2:122) %>%
-  create_infotables(y="TARGET", bins=10, parallel=FALSE)
+  create_infotables(y="TARGET", bins=2, parallel=FALSE)
 
 IV$Summary
 IV$Tables$EXT_SOURCE_3
-IV$Tables$EXT_SOURCE_2
-IV$Tables$EXT_SOURCE_1
-IV$Tables$DAYS_EMPLOYED
-IV$Tables$DAYS_BIRTH
-IV$Tables$OCCUPATION_TYPE
-IV$Tables$ORGANIZATION_TYPE
+
+application_train_a <- application_train %>%
+  filter(EXT_SOURCE_3 <= 0.54)
+application_train_b <- application_train %>%
+  filter(EXT_SOURCE_3 >= 0.54)
+application_train_c <- application_train %>%
+  filter(is.na(EXT_SOURCE_3))
+
+IVa <- select(application_train_a, 2:122) %>%
+  create_infotables(y="TARGET", bins=2, parallel=FALSE)
+IVa$Summary
+IVa$Tables$EXT_SOURCE_2
+
+IVb <- select(application_train_b, 2:122) %>%
+  create_infotables(y="TARGET", bins=2, parallel=FALSE)
+IVb$Summary
+IVb$Tables$EXT_SOURCE_2
+
+IVc <- select(application_train_c, 2:122) %>%
+  create_infotables(y="TARGET", bins=2, parallel=FALSE)
+IVc$Summary
+IVc$Tables$EXT_SOURCE_2
